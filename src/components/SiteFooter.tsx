@@ -1,3 +1,4 @@
+import Image from "next/image";
 import Link from "next/link";
 import { buildWhatsappUrl } from "@/lib/whatsapp";
 import type { SiteSettings } from "@/lib/types";
@@ -8,8 +9,7 @@ export function SiteFooter({ settings }: { settings: SiteSettings }) {
     <footer className="mt-24 border-t border-line bg-cream">
       <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
         <div>
-          <p className="font-serif text-3xl text-wine">{settings.business_name}</p>
-          <p className="mt-3 max-w-xs text-sm text-muted">Premium lace and occasion fabrics.</p>
+          <Image src="/brand/logo-full.png" alt={settings.business_name} width={733} height={451} className="h-auto w-56" />
         </div>
         <div>
           <h2 className="eyebrow mb-4">Explore</h2>

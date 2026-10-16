@@ -1,7 +1,9 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { Menu, X } from "lucide-react";
 
 export function MobileNav({ links }: { links: { href: string; label: string }[] }) {
@@ -31,36 +33,39 @@ export function MobileNav({ links }: { links: { href: string; label: string }[] 
       >
         <Menu className="h-6 w-6" aria-hidden />
       </button>
-      {open ? (
-        <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="fixed inset-0 z-50 bg-ivory">
-          <div className="flex h-16 items-center justify-between px-5">
-            <span className="font-serif text-2xl text-wine">Talatu Fabrics</span>
-            <button
-              type="button"
-              aria-label="Close menu"
-              onClick={() => setOpen(false)}
-              className="-mr-2 inline-flex h-11 w-11 items-center justify-center"
-            >
-              <X className="h-6 w-6" aria-hidden />
-            </button>
-          </div>
-          <nav className="px-5 pt-6">
-            <ul className="divide-y divide-line border-y border-line">
-              {links.map((l) => (
-                <li key={l.href}>
-                  <Link
-                    href={l.href}
-                    onClick={() => setOpen(false)}
-                    className="block py-4 font-serif text-3xl hover:text-wine"
-                  >
-                    {l.label}
-                  </Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
-        </div>
-      ) : null}
+      {open
+        ? createPortal(
+            <div id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu" className="fixed inset-0 z-50 bg-ivory">
+              <div className="flex h-16 items-center justify-between px-5">
+                <Image src="/brand/wordmark.png" alt="Talatu Fabrics" width={733} height={94} className="h-6 w-auto" />
+                <button
+                  type="button"
+                  aria-label="Close menu"
+                  onClick={() => setOpen(false)}
+                  className="-mr-2 inline-flex h-11 w-11 items-center justify-center"
+                >
+                  <X className="h-6 w-6" aria-hidden />
+                </button>
+              </div>
+              <nav className="px-5 pt-6">
+                <ul className="divide-y divide-line border-y border-line">
+                  {links.map((l) => (
+                    <li key={l.href}>
+                      <Link
+                        href={l.href}
+                        onClick={() => setOpen(false)}
+                        className="block py-4 font-serif text-3xl hover:text-wine"
+                      >
+                        {l.label}
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 }

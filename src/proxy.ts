@@ -75,5 +75,7 @@ export async function proxy(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!_next/static|_next/image|favicon.ico).*)"],
+  // Public brand files (logo, favicons) are excluded from the gate: Next's image optimiser
+  // fetches them server-side without the visitor's credentials, and a logo is not private.
+  matcher: ["/((?!_next/static|_next/image|favicon.ico|icon.png|apple-icon.png|brand/).*)"],
 };
